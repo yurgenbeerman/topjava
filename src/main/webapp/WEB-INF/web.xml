@@ -27,7 +27,7 @@
 
     <servlet>
         <servlet-name>MealController</servlet-name>
-        <servlet-class>ru.javawebinar.topjava.web.controller.MealController</servlet-class>
+        <servlet-class>ru.javawebinar.topjava.web.MealController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MealController</servlet-name>

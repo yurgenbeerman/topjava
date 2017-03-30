@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.web.controller;
+package ru.javawebinar.topjava.web;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
