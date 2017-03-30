@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 <html>
 <head>
     <title>Meals</title>
@@ -11,11 +11,15 @@
     <table>
         <c:forEach items="${mealsWithExceeded}" var="meal">
             <tr style="color: ${meal.exceed ?  'red' : 'green'}">
-                <td>${meal.dateTime}</td>
+                <td>${meal.id}</td>
+                <td><javatime:format value="${meal.dateTime}" pattern="yyyy-MM-dd hh:mm" /></td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
+                <td><a href="edit-meal?id=${meal.id}">Edit</a></td>
+                <td><a href="delete-meal?id=${meal.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
+    <a href="add-meal">Add meal</a>
 </body>
 </html>
