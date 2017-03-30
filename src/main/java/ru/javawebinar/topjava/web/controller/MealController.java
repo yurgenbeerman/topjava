@@ -1,0 +1,56 @@
+package ru.javawebinar.topjava.web.controller;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import org.slf4j.Logger;
+import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Meals;
+import ru.javawebinar.topjava.util.MealsUtil;
+
+import static org.slf4j.LoggerFactory.getLogger;
+
+/**
+ * Created by yurii.pyvovarenko on 3/29/2017.
+ */
+public class MealController extends HttpServlet {
+    private static final Logger LOG = getLogger(MealController.class);
+    private static final long serialVersionUID = 1L;
+    private static String INSERT_OR_EDIT = "/meal.jsp";
+    private static String LIST_MEALS = "/meals.jsp";
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String forward="";
+        String action = request.getParameter("action");
+
+        if (action.equalsIgnoreCase("delete")){
+            int mealId = Integer.parseInt(request.getParameter("id"));
+            Meals.delete(mealId);
+            forward = LIST_MEALS;
+            //request.setAttribute("mealsWithExceeded", MealsUtil.getWithExceeded(Meals.getAll(), Meals.getCaloriesPerDay()));
+            HttpSession session = request.getSession();
+            session.setAttribute("mealsWithExceeded", MealsUtil.getWithExceeded(Meals.getAll(), Meals.getCaloriesPerDay()));
+        } else if (action.equalsIgnoreCase("edit")){
+            forward = INSERT_OR_EDIT;
+            int mealId = Integer.parseInt(request.getParameter("id"));
+            Meal meal = Meals.getById(mealId);
+            request.setAttribute("meal", meal);
+        } else if (action.equalsIgnoreCase("listMeals")){
+            forward = LIST_MEALS;
+            request.setAttribute("mealsWithExceeded", MealsUtil.getWithExceeded(Meals.getAll(), Meals.getCaloriesPerDay()));
+        } else {
+            forward = INSERT_OR_EDIT;
+        }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
+    }
+}
