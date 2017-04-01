@@ -15,11 +15,11 @@
                 <td><javatime:format value="${meal.dateTime}" pattern="yyyy-MM-dd hh:mm" /></td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="edit-meal?id=${meal.id}">Edit</a></td>
-                <td><a href="delete-meal?id=${meal.id}">Delete</a></td>
+                <td><a href="mealController?action=edit&id=${meal.id}">Edit</a></td>
+                <td><a href="mealController?action=delete&id=${meal.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
-    <a href="add-meal">Add meal</a>
+    <a href="mealController?action=add">Add meal</a>
 </body>
 </html>
