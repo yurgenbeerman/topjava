@@ -20,7 +20,8 @@ public class User extends NamedEntity {
 
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
-    public User() {
+    public User(String name, String email, String password) {
+        this(null, name, email, password, Role.ROLE_USER);
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {

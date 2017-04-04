@@ -15,5 +15,8 @@ public interface MealRepository {
 
     Meal get(int id);
 
+    //false if not belong
+    boolean belongsToUser(int id, int userId);
+
     Collection<Meal> getAll();
 }

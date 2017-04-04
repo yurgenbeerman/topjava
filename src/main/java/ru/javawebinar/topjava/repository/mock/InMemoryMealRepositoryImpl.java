@@ -41,6 +41,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public boolean belongsToUser(int id, int userId) {
+        return repository.get(id).getUserId() == userId;
+    }
+
+    @Override
     public Collection<Meal> getAll() {
         return repository.values();
     }
