@@ -8,7 +8,7 @@ import java.time.LocalTime;
  * GKislin
  * 11.01.2015.
  */
-public class Meal extends BaseEntity {
+public class Meal extends BaseEntity implements Comparable<Meal> {
     private Integer id;
 
     private final LocalDateTime dateTime;
@@ -67,6 +67,11 @@ public class Meal extends BaseEntity {
         return userId;
     }
 
+    // Overriding the compareTo method
+    public int compareTo(Meal meal) {
+        return (this.dateTime).compareTo(meal.dateTime);
+    }
+
     @Override
     public String toString() {
         return "Meal{" +
@@ -74,6 +79,7 @@ public class Meal extends BaseEntity {
                 ", dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
+                ", userId=" + userId +
                 '}';
     }
 }

@@ -1,12 +1,13 @@
 package ru.javawebinar.topjava.model;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
 import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
-public class User extends NamedEntity {
+public class User extends NamedEntity implements Comparator<User>, Comparable<User> {
 
     private String email;
 
@@ -19,6 +20,8 @@ public class User extends NamedEntity {
     private Set<Role> roles;
 
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
+
+    public User() {}
 
     public User(String name, String email, String password) {
         this(null, name, email, password, Role.ROLE_USER);
@@ -91,5 +94,15 @@ public class User extends NamedEntity {
                 ", roles=" + roles +
                 ", caloriesPerDay=" + caloriesPerDay +
                 ')';
+    }
+
+    // Overriding the compareTo method - compare by name
+    public int compareTo(User user) {
+        return (this.name).compareTo(user.name);
+    }
+
+    // Overriding the compare method to sort by email
+    public int compare(User user, User otherUser) {
+        return user.email.compareTo(otherUser.email);
     }
 }

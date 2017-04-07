@@ -11,12 +11,9 @@ import java.util.Collection;
 public interface MealRepository {
     Meal save(Meal Meal);
 
-    void delete(int id);
+    boolean delete(int id);
 
     Meal get(int id);
-
-    //false if not belong
-    boolean belongsToUser(int id, int userId);
 
     Collection<Meal> getAll();
 }

@@ -19,8 +19,8 @@ public class UsersUtil {
 
     public static List<User> getSorted(Collection<User> users, boolean ascending) {
         return users.stream()
-                .sorted() //TODO provide Comparator by name
-                .sorted() //TODO provide Comparator by email
+                .sorted()
+                .sorted((user1, user2) -> new User().compare(user1, user2)) // user1.getEmail().compareTo(user2.getEmail()))
                 .collect(Collectors.toList());
     }
 }
