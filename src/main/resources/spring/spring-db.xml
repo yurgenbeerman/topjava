@@ -27,4 +27,10 @@
     <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
+    <bean class="ru.javawebinar.topjava.model.Meal" id="meal">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+<!--    <bean class="ru.javawebinar.topjava.to.MealWithExceed" id="meal1">
+        <constructor-arg ref="meal"/>
+    </bean>-->
 </beans>

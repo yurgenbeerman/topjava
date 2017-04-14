@@ -43,19 +43,33 @@ public class MealServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
 
-        Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
-                LocalDateTime.parse(request.getParameter("dateTime")),
-                request.getParameter("description"),
-                Integer.valueOf(request.getParameter("calories")));
+        String action = request.getParameter("action");
+        LOG.info("action = {}", action);
 
-        if (meal.isNew()) {
-            LOG.info("Create {}", meal);
-            mealController.create(meal);
+        if (action != null && action.equals("filter")) {
+            LOG.info("doPost. dateTime = " + request.getParameter("startDate"));
+            LOG.info("doPost. description = " + request.getParameter("endtDate"));
+            LOG.info("doPost. dateTime = " + request.getParameter("startTime"));
+            LOG.info("doPost. description = " + request.getParameter("endtTime"));
         } else {
-            LOG.info("Update {}", meal);
-            mealController.update(meal, getId(request));
+            LOG.info("doPost. id = " + id);
+            LOG.info("doPost. dateTime = " + request.getParameter("dateTime"));
+            LOG.info("doPost. description = " + request.getParameter("description"));
+            LOG.info("doPost. calories = " + request.getParameter("calories"));
+            Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.valueOf(request.getParameter("calories")));
+
+            if (meal.isNew()) {
+                LOG.info("Create {}", meal);
+                mealController.create(meal);
+            } else {
+                LOG.info("Update {}", meal);
+                mealController.update(meal, getId(request));
+            }
+            response.sendRedirect("meals");
         }
-        response.sendRedirect("meals");
     }
 
     @Override
@@ -75,6 +89,7 @@ public class MealServlet extends HttpServlet {
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
                         mealController.get(getId(request));
                 request.setAttribute("meal", meal);
+                request.setAttribute("id", meal.getId());
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);
                 break;
             case "all":
