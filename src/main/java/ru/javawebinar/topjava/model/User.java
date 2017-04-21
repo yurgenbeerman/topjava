@@ -25,6 +25,9 @@ public class User extends NamedEntity {
     public static final String BY_EMAIL = "User.getByEmail";
     public static final String ALL_SORTED = "User.getAllSorted";
 
+//    @Id
+//    private Integer id;
+
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -69,6 +72,10 @@ public class User extends NamedEntity {
         this.caloriesPerDay = caloriesPerDay;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
