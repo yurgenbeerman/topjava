@@ -6,9 +6,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**
+ * GKislin
+ * 11.01.2015.
+ */
 public class Meal extends BaseEntity {
-    private Integer id;
-
     private LocalDateTime dateTime;
 
     private String description;
@@ -50,10 +52,6 @@ public class Meal extends BaseEntity {
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
-    }
-
-    public boolean isNew() {
-        return id == null;
     }
 
     public void setDateTime(LocalDateTime dateTime) {
