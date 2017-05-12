@@ -4,12 +4,18 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.JpaUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
@@ -18,6 +24,8 @@ import java.util.Collections;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
+import org.springframework.test.context.ActiveProfilesResolver;
+
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
@@ -25,14 +33,19 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private Environment environment;
-    environment.getActiveProfiles()
-    @Autowired
+
+    //@Autowired
     protected JpaUtil jpaUtil;
+
+    @Autowired
+    ApplicationContext context;
 
     @Before
     public void setUp() throws Exception {
         service.evictCache();
-        jpaUtil.clear2ndLevelHibernateCache();
+        if (environment.getActiveProfiles().toString().contains("jpa")) {
+            jpaUtil = context.getBean(JpaUtil.class);
+        }
     }
 
     @Test
