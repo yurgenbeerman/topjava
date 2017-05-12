@@ -22,7 +22,7 @@ public class BaseEntity implements Persistable<Integer> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
     @Access(value = AccessType.PROPERTY)
-    private Integer id;
+    protected Integer id;
 
     protected BaseEntity() {
     }
