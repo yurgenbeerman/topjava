@@ -6,19 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
-import static ru.javawebinar.topjava.util.ValidationUtil.checkIdConsistent;
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.checkIdConsistent;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
+
 @Controller
 public class MealRestController {
     private static final Logger LOG = LoggerFactory.getLogger(MealRestController.class);
+
     private final MealService service;
 
     @Autowired
@@ -62,13 +65,13 @@ public class MealRestController {
         int userId = AuthorizedUser.id();
         LOG.info("getBetween dates({} - {}) time({} - {}) for User {}", startDate, endDate, startTime, endTime, userId);
 
-                return MealsUtil.getFilteredWithExceeded(
-                        service.getBetweenDates(
-                                        startDate != null ? startDate : DateTimeUtil.MIN_DATE,
-                                        endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId),
-                        startTime != null ? startTime : LocalTime.MIN,
-                        endTime != null ? endTime : LocalTime.MAX,
-                        AuthorizedUser.getCaloriesPerDay()
-                        );
+        return MealsUtil.getFilteredWithExceeded(
+                service.getBetweenDates(
+                        startDate != null ? startDate : DateTimeUtil.MIN_DATE,
+                        endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId),
+                startTime != null ? startTime : LocalTime.MIN,
+                endTime != null ? endTime : LocalTime.MAX,
+                AuthorizedUser.getCaloriesPerDay()
+        );
     }
 }
